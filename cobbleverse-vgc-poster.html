@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Cobbleverse VGC — Regulamento Oficial</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#101c14;
+    --bg-panel:#182c1c;
+    --stone:#3a4a3c;
+    --parchment:#f1e8cf;
+    --parchment-dim:#e4d8b8;
+    --ink:#1c2317;
+    --moss:#5c8a52;
+    --moss-bright:#8fc46a;
+    --pokeball-red:#c0392b;
+    --pokeball-red-dark:#8c291d;
+    --gold:#d4af37;
+    --gold-dim:#9c7f2a;
+    --danger:#7a2e2e;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  body{
+    background:
+      radial-gradient(circle at 20% 0%, #1c3320 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, #1a2e1e 0%, transparent 40%),
+      var(--bg-deep);
+    color:var(--parchment);
+    font-family:'Space Grotesk', sans-serif;
+    padding:0 0 80px;
+    overflow-x:hidden;
+  }
+
+  .pixel-corners{
+    box-shadow:
+      0 -4px 0 0 var(--ink),
+      0 4px 0 0 var(--ink),
+      -4px 0 0 0 var(--ink),
+      4px 0 0 0 var(--ink),
+      -4px -4px 0 0 var(--ink),
+      4px -4px 0 0 var(--ink),
+      -4px 4px 0 0 var(--ink),
+      4px 4px 0 0 var(--ink);
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:64px 24px 48px;
+    text-align:center;
+    background:
+      linear-gradient(180deg, #16281a 0%, #101c14 100%);
+    border-bottom:6px solid var(--ink);
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 4px, transparent 4px 32px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 4px, transparent 4px 32px);
+    pointer-events:none;
+  }
+  .eyebrow{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--pokeball-red);
+    color:#fff;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:2px;
+    padding:8px 18px;
+    border:3px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+    text-transform:uppercase;
+  }
+  .eyebrow .dot{width:8px; height:8px; background:#fff; border-radius:50%; box-shadow:0 0 0 2px var(--ink);}
+
+  h1.title{
+    position:relative;
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(28px, 6vw, 58px);
+    line-height:1.35;
+    margin:28px 0 6px;
+    color:var(--parchment);
+    text-shadow:
+      3px 3px 0 var(--pokeball-red-dark),
+      6px 6px 0 var(--ink);
+    letter-spacing:1px;
+  }
+  .title small{
+    display:block;
+    font-family:'Press Start 2P', monospace;
+    font-size:0.32em;
+    color:var(--moss-bright);
+    margin-top:14px;
+    text-shadow:2px 2px 0 var(--ink);
+  }
+
+  .subtitle{
+    position:relative;
+    max-width:640px;
+    margin:22px auto 0;
+    font-size:16px;
+    color:var(--parchment-dim);
+    line-height:1.6;
+  }
+
+  .badges{
+    position:relative;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    margin-top:32px;
+  }
+  .badge{
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:13px;
+    padding:9px 16px;
+    border:3px solid var(--ink);
+    background:var(--bg-panel);
+    color:var(--parchment);
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .badge.on{background:var(--moss); color:var(--ink);}
+  .badge.off{background:var(--danger); color:#f3d9d9; text-decoration:line-through; opacity:0.85;}
+  .badge.gold{background:var(--gold); color:var(--ink);}
+
+  /* ---------- NAV RIBBON ---------- */
+  .ribbon{
+    background:var(--ink);
+    border-bottom:6px solid var(--ink);
+    padding:12px 16px;
+    display:flex;
+    gap:0;
+    justify-content:center;
+    flex-wrap:wrap;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:1px;
+  }
+  .ribbon span{
+    padding:6px 14px;
+    color:var(--moss-bright);
+    text-transform:uppercase;
+  }
+  .ribbon span::before{content:"◆ "; color:var(--gold);}
+
+  /* ---------- SECTIONS ---------- */
+  main{
+    max-width:960px;
+    margin:0 auto;
+    padding:56px 20px 0;
+    display:flex;
+    flex-direction:column;
+    gap:44px;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:20px;
+  }
+  .section-num{
+    font-family:'Press Start 2P', monospace;
+    font-size:22px;
+    color:var(--pokeball-red);
+    text-shadow:2px 2px 0 var(--ink);
+  }
+  .section-title{
+    font-family:'Press Start 2P', monospace;
+    font-size:15px;
+    color:var(--parchment);
+    letter-spacing:0.5px;
+  }
+  .section-rule{
+    flex:1;
+    height:4px;
+    background:repeating-linear-gradient(90deg, var(--stone) 0 8px, transparent 8px 14px);
+    align-self:center;
+  }
+
+  .card{
+    background:var(--parchment);
+    color:var(--ink);
+    padding:26px 28px;
+    position:relative;
+  }
+  .card::after{
+    content:"";
+    position:absolute; left:8px; right:8px; bottom:-6px; height:6px;
+    background:var(--ink);
+    opacity:0.35;
+  }
+
+  ul.rules-list{list-style:none; display:flex; flex-direction:column; gap:12px;}
+  ul.rules-list li{
+    position:relative;
+    padding-left:26px;
+    font-size:15px;
+    line-height:1.55;
+  }
+  ul.rules-list li::before{
+    content:"▸";
+    position:absolute; left:0; top:0;
+    color:var(--pokeball-red);
+    font-weight:700;
+  }
+  ul.rules-list li strong{color:var(--pokeball-red-dark);}
+
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  @media (max-width:640px){ .two-col{grid-template-columns:1fr;} }
+
+  .mini-card{
+    background:var(--bg-panel);
+    border:3px solid var(--ink);
+    padding:18px 20px;
+  }
+  .mini-card h4{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:1.5px;
+    color:var(--moss-bright);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .mini-card p{font-size:14px; color:var(--parchment-dim); line-height:1.5;}
+
+  /* ---------- RESTRICTED TABLE ---------- */
+  .restricted-wrap{
+    background:linear-gradient(180deg, #241a10 0%, #1a130c 100%);
+    border:4px solid var(--gold-dim);
+    padding:26px;
+    position:relative;
+  }
+  .restricted-cap{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:2px;
+    color:var(--gold);
+    text-transform:uppercase;
+    margin-bottom:18px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .restricted-cap::before, .restricted-cap::after{content:""; flex:1; height:2px; background:var(--gold-dim);}
+
+  .gen-grid{display:grid; grid-template-columns:repeat(2, 1fr); gap:18px;}
+  @media (max-width:640px){ .gen-grid{grid-template-columns:1fr;} }
+  .gen-block{background:rgba(0,0,0,0.25); border:2px solid var(--gold-dim); padding:14px 16px;}
+  .gen-block h5{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--gold);
+    letter-spacing:1px;
+    margin-bottom:10px;
+    text-transform:uppercase;
+  }
+  .pill-row{display:flex; flex-wrap:wrap; gap:6px;}
+  .pill{
+    font-size:12.5px;
+    font-family:'JetBrains Mono', monospace;
+    background:var(--gold);
+    color:#241a10;
+    padding:4px 10px;
+    font-weight:700;
+  }
+  .pill.sub{background:transparent; color:var(--gold-dim); border:1px solid var(--gold-dim); font-weight:500;}
+
+  /* ---------- PERMITTED ---------- */
+  .permit-block{margin-bottom:22px;}
+  .permit-block:last-child{margin-bottom:0;}
+  .permit-block h5{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--moss);
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    margin-bottom:10px;
+    padding-bottom:6px;
+    border-bottom:2px dashed var(--stone);
+  }
+  .pill-row.light .pill{background:var(--moss); color:#0e160f;}
+
+  /* ---------- MECHANICS ---------- */
+  .mech-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;}
+  @media (max-width:720px){ .mech-grid{grid-template-columns:1fr;} }
+  .mech-card{
+    background:var(--bg-panel);
+    border:3px solid var(--ink);
+    padding:20px;
+    text-align:center;
+  }
+  .mech-card.allowed{border-color:var(--moss);}
+  .mech-card.banned{border-color:var(--danger); opacity:0.9;}
+  .mech-icon{font-size:28px; margin-bottom:10px;}
+  .mech-card h4{font-family:'JetBrains Mono', monospace; font-size:13px; letter-spacing:1px; margin-bottom:8px;}
+  .mech-card.allowed h4{color:var(--moss-bright);}
+  .mech-card.banned h4{color:#e08b8b;}
+  .mech-card p{font-size:13px; color:var(--parchment-dim); line-height:1.5;}
+  .tag-ok{display:inline-block; margin-top:10px; font-size:11px; font-family:'JetBrains Mono', monospace; background:var(--moss); color:#0e160f; padding:3px 10px; font-weight:700;}
+  .tag-no{display:inline-block; margin-top:10px; font-size:11px; font-family:'JetBrains Mono', monospace; background:var(--danger); color:#f3d9d9; padding:3px 10px; font-weight:700;}
+
+  .exclusive-note{
+    margin-top:18px;
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:13px;
+    color:var(--gold);
+    background:rgba(212,175,55,0.08);
+    border:2px dashed var(--gold-dim);
+    padding:12px 16px;
+  }
+
+  /* ---------- CLAUSES ---------- */
+  .clause-list{display:flex; flex-direction:column; gap:10px;}
+  .clause{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    background:var(--parchment-dim);
+    padding:12px 16px;
+    border-left:5px solid var(--pokeball-red);
+  }
+  .clause .num{
+    font-family:'Press Start 2P', monospace;
+    font-size:11px;
+    color:var(--pokeball-red-dark);
+    min-width:26px;
+  }
+  .clause p{font-size:14px; line-height:1.5;}
+
+  /* ---------- META NOTE ---------- */
+  .meta-note{
+    background:var(--bg-panel);
+    border:3px solid var(--stone);
+    padding:22px 24px;
+    font-size:14px;
+    line-height:1.6;
+    color:var(--parchment-dim);
+  }
+  .meta-note strong{color:var(--moss-bright);}
+
+  /* ---------- FOOTER / CTA ---------- */
+  footer{
+    margin:60px auto 0;
+    max-width:960px;
+    padding:0 20px;
+  }
+  .cta{
+    background:
+      radial-gradient(circle at 50% -20%, #2a4a2c 0%, transparent 60%),
+      var(--ink);
+    border:4px solid var(--pokeball-red);
+    text-align:center;
+    padding:44px 24px;
+    box-shadow:8px 8px 0 var(--pokeball-red-dark);
+  }
+  .cta h3{
+    font-family:'Press Start 2P', monospace;
+    font-size:clamp(18px, 3.4vw, 26px);
+    color:var(--parchment);
+    margin-bottom:14px;
+    text-shadow:3px 3px 0 var(--pokeball-red-dark);
+  }
+  .cta p{color:var(--parchment-dim); font-size:14px; margin-bottom:22px;}
+  .cta-btn{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:1.5px;
+    color:#fff;
+    background:var(--pokeball-red);
+    padding:14px 32px;
+    border:3px solid var(--parchment);
+    text-transform:uppercase;
+    text-decoration:none;
+    cursor:pointer;
+    transition:transform 0.12s ease, box-shadow 0.12s ease;
+    box-shadow:4px 4px 0 var(--ink);
+  }
+  .cta-btn:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:6px 6px 0 var(--ink);
+  }
+  .cta-btn:active{
+    transform:translate(0,0);
+    box-shadow:2px 2px 0 var(--ink);
+  }
+  .fine-print{
+    text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--stone);
+    margin-top:22px;
+    letter-spacing:1px;
+  }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .gallery-cap{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .gallery-cap .section-num{font-family:'Press Start 2P', monospace; font-size:22px; color:var(--pokeball-red); text-shadow:2px 2px 0 var(--ink);}
+  .gallery-cap .section-title{font-family:'Press Start 2P', monospace; font-size:15px; color:var(--parchment); letter-spacing:0.5px;}
+  .gallery-cap .section-rule{flex:1; height:4px; background:repeating-linear-gradient(90deg, var(--stone) 0 8px, transparent 8px 14px); align-self:center;}
+
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr;
+    grid-template-rows:auto auto;
+    gap:14px;
+  }
+  .gallery-grid .g-main{grid-row:1 / 3;}
+  @media (max-width:720px){
+    .gallery-grid{grid-template-columns:1fr;}
+    .gallery-grid .g-main{grid-row:auto;}
+  }
+  .g-item{
+    position:relative;
+    border:4px solid var(--ink);
+    box-shadow:6px 6px 0 var(--stone);
+    overflow:hidden;
+    background:#000;
+  }
+  .g-item img{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:saturate(1.05) contrast(1.03);
+  }
+  .g-item .g-tag{
+    position:absolute;
+    left:10px; bottom:10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    color:#fff;
+    background:rgba(16,28,20,0.78);
+    border:2px solid var(--gold);
+    padding:5px 10px;
+    text-transform:uppercase;
+  }
+  .g-item.g-main{min-height:340px;}
+  .g-item.g-small{min-height:163px;}
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <span class="eyebrow"><span class="dot"></span>Evento Competitivo Oficial</span>
+    <h1 class="title">COBBLEVERSE
+      <small>VGC — Regulamento Oficial</small>
+    </h1>
+    <p class="subtitle">Batalhas em duplas, equipes de 6, quatro em campo. Monte sua estratégia, respeite as cláusulas e prove quem manda no metagame do servidor.</p>
+    <div class="badges">
+      <span class="badge on">⚔ Doubles 2v2</span>
+      <span class="badge on">Nível 50 fixo</span>
+      <span class="badge gold">1 Restrito / equipe</span>
+      <span class="badge on">Mega ▪ Tera (1 por batalha)</span>
+      <span class="badge off">Dynamax</span>
+    </div>
+  </section>
+
+  <div class="ribbon">
+    <span>Formato</span><span>Regras Gerais</span><span>Restritos</span><span>Permitidos</span><span>Mecânicas</span><span>Cláusulas</span><span>Meta</span>
+  </div>
+
+  <section class="gallery" style="margin-top:48px;">
+    <div class="gallery-cap">
+      <span class="section-num">◈</span>
+      <span class="section-title">A ARENA</span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="g-item g-main">
+        <img src="img/arena-04.png" alt="Cúpula da Pokébola sobre o oceano — Cobbleverse">
+        <span class="g-tag">Cúpula Pokébola</span>
+      </div>
+      <div class="g-item g-small">
+        <img src="img/arena-02.png" alt="Ponte suspensa da Erika Gym — Cobbleverse">
+        <span class="g-tag">Erika Gym</span>
+      </div>
+      <div class="g-item g-small">
+        <img src="img/arena-01.png" alt="Estrutura suspensa da arena — Cobbleverse">
+        <span class="g-tag">Arena Suspensa</span>
+      </div>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- 1. FORMATO -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <span class="section-title">FORMATO</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="card">
+        <ul class="rules-list">
+          <li>Batalhas em <strong>Duplas (Doubles 2v2)</strong>.</li>
+          <li>Cada jogador registra uma equipe de <strong>6 Pokémon</strong>.</li>
+          <li>Antes de cada batalha, escolhe <strong>4 dos 6</strong> para participar.</li>
+          <li>Todos os Pokémon serão ajustados automaticamente para o <strong>Nível 50</strong>.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. REGRAS GERAIS -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <span class="section-title">REGRAS GERAIS</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="two-col">
+        <div class="mini-card">
+          <h4>Species Clause</h4>
+          <p>Não é permitido utilizar dois Pokémon da mesma espécie na equipe.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Item Clause</h4>
+          <p>Não é permitido repetir itens entre os Pokémon da equipe.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Origem Legítima</h4>
+          <p>São proibidos Pokémon obtidos por exploits, bugs ou qualquer método ilícito.</p>
+        </div>
+        <div class="mini-card">
+          <h4>Disponibilidade</h4>
+          <p>Todos os Pokémon do servidor são permitidos, exceto os banidos ou classificados como restritos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. RESTRITOS -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <span class="section-title">POKÉMON RESTRITOS</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="restricted-wrap">
+        <div class="restricted-cap">Máximo de 1 por equipe</div>
+        <div class="gen-grid">
+          <div class="gen-block">
+            <h5>Geração I</h5>
+            <div class="pill-row"><span class="pill">Mewtwo</span></div>
+          </div>
+          <div class="gen-block">
+            <h5>Geração VI</h5>
+            <div class="pill-row">
+              <span class="pill">Xerneas</span>
+              <span class="pill">Yveltal</span>
+              <span class="pill">Zygarde 50%</span>
+              <span class="pill">Zygarde Complete</span>
+            </div>
+          </div>
+          <div class="gen-block">
+            <h5>Geração VII</h5>
+            <div class="pill-row">
+              <span class="pill">Solgaleo</span>
+              <span class="pill">Lunala</span>
+              <span class="pill">Necrozma</span>
+              <span class="pill">Necrozma Dusk Mane</span>
+              <span class="pill">Necrozma Dawn Wings</span>
+              <span class="pill">Ultra Necrozma</span>
+            </div>
+          </div>
+          <div class="gen-block">
+            <h5>Geração VIII</h5>
+            <div class="pill-row">
+              <span class="pill">Zacian</span>
+              <span class="pill">Zamazenta</span>
+              <span class="pill">Eternatus*</span>
+              <span class="pill">Calyrex</span>
+              <span class="pill">Calyrex Ice Rider</span>
+              <span class="pill">Calyrex Shadow Rider</span>
+            </div>
+          </div>
+          <div class="gen-block" style="grid-column:1/-1">
+            <h5>Geração IX</h5>
+            <div class="pill-row">
+              <span class="pill">Koraidon</span>
+              <span class="pill">Miraidon</span>
+              <span class="pill">Terapagos</span>
+            </div>
+          </div>
+        </div>
+        <div class="exclusive-note">* Eternatus será banido caso o Dynamax seja habilitado futuramente.</div>
+      </div>
+    </section>
+
+    <!-- 4. PERMITIDOS -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <span class="section-title">POKÉMON PERMITIDOS</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="card">
+        <div class="permit-block">
+          <h5>Lendários liberados</h5>
+          <div class="pill-row light">
+            <span class="pill">Articuno</span><span class="pill">Zapdos</span><span class="pill">Moltres</span>
+            <span class="pill">Regieleki</span><span class="pill">Regidrago</span>
+            <span class="pill">Urshifu (ambas as formas)</span><span class="pill">Enamorus</span>
+            <span class="pill">Ogerpon (todas as máscaras)</span>
+            <span class="pill">Okidogi</span><span class="pill">Munkidori</span><span class="pill">Fezandipiti</span>
+          </div>
+          <p style="margin-top:10px; font-size:13px; color:#4a5a44;">+ todos os demais lendários não listados como restritos.</p>
+        </div>
+        <div class="permit-block">
+          <h5>Míticos</h5>
+          <div class="pill-row light">
+            <span class="pill">Mew</span><span class="pill">Celebi</span><span class="pill">Jirachi</span>
+            <span class="pill">Deoxys</span><span class="pill">Darkrai</span><span class="pill">Shaymin</span>
+            <span class="pill">Victini</span><span class="pill">Keldeo</span><span class="pill">Meloetta</span>
+            <span class="pill">Genesect</span><span class="pill">Diancie</span><span class="pill">Hoopa</span>
+            <span class="pill">Volcanion</span><span class="pill">Magearna</span><span class="pill">Marshadow</span>
+            <span class="pill">Zeraora</span><span class="pill">Meltan</span><span class="pill">Melmetal</span>
+            <span class="pill">Zarude</span><span class="pill">Pecharunt</span>
+          </div>
+        </div>
+        <div class="permit-block" style="margin-bottom:0;">
+          <h5>Demais Pokémon</h5>
+          <p style="font-size:14px; line-height:1.6;">Todos os Pokémon comuns, pseudo-lendários, iniciais, Paradox, Ultra Beasts e demais espécies disponíveis no servidor estão liberados sem restrição adicional.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. MECÂNICAS -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">05</span>
+        <span class="section-title">MECÂNICAS ESPECIAIS</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="mech-grid">
+        <div class="mech-card allowed">
+          <div class="mech-icon">◈</div>
+          <h4>MEGA EVOLUÇÃO</h4>
+          <p>Apenas 1 Pokémon pode Mega Evoluir por batalha. Se usada, nenhum Pokémon poderá Terastalizar.</p>
+          <span class="tag-ok">Permitida</span>
+        </div>
+        <div class="mech-card allowed">
+          <div class="mech-icon">▲</div>
+          <h4>TERASTALIZAÇÃO</h4>
+          <p>Apenas 1 Pokémon pode Terastalizar por batalha. Se usada, nenhum Pokémon poderá Mega Evoluir.</p>
+          <span class="tag-ok">Permitida</span>
+        </div>
+        <div class="mech-card banned">
+          <div class="mech-icon">✕</div>
+          <h4>DYNAMAX</h4>
+          <p>Proibido nesta temporada. Se liberado futuramente, Eternatus será banido automaticamente.</p>
+          <span class="tag-no">Proibido</span>
+        </div>
+      </div>
+      <div class="exclusive-note">Mega Evolução e Terastalização são mutuamente exclusivas: a equipe escolhe apenas uma das duas por batalha.</div>
+    </section>
+
+    <!-- 6. CLÁUSULAS -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">06</span>
+        <span class="section-title">CLÁUSULAS COMPETITIVAS</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="card">
+        <div class="clause-list">
+          <div class="clause"><span class="num">01</span><p><strong>Species Clause</strong> — espécies repetidas são proibidas na mesma equipe.</p></div>
+          <div class="clause"><span class="num">02</span><p><strong>Item Clause</strong> — itens repetidos são proibidos na mesma equipe.</p></div>
+          <div class="clause"><span class="num">03</span><p><strong>Restrito Clause</strong> — máximo de 1 Pokémon Restrito por equipe.</p></div>
+          <div class="clause"><span class="num">04</span><p><strong>Mega/Tera Clause</strong> — apenas 1 mecânica especial pode ser utilizada por batalha.</p></div>
+          <div class="clause"><span class="num">05</span><p>Exploits, glitches e qualquer forma de trapaça são proibidos e sujeitos a desqualificação.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. META -->
+    <section>
+      <div class="section-head">
+        <span class="section-num">07</span>
+        <span class="section-title">ATUALIZAÇÕES DO META</span>
+        <div class="section-rule"></div>
+      </div>
+      <div class="meta-note">
+        A administração poderá alterar este regulamento a qualquer momento para manter o ambiente competitivo saudável, incluindo <strong>inclusão ou remoção de Pokémon</strong> da lista de restritos, <strong>banimento de habilidades, itens ou golpes</strong> considerados excessivamente dominantes, e <strong>alteração das mecânicas permitidas</strong> (Mega Evolução, Terastalização ou Dynamax) conforme necessário para o equilíbrio do metagame.
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="cta">
+      <h3>PREPARE SUA EQUIPE, TREINADOR</h3>
+      <p>Formato semelhante ao VGC oficial, adaptado ao Cobbleverse — diversidade de equipes, sem uma mecânica dominando o metagame.</p>
+      <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScUamcgOLHulPDu1g07h2w2D2bnC2npfBe4oZwtiSSiTiWrtQ/viewform?usp=publish-editor" target="_blank" rel="noopener">Inscreva-se para o torneio</a>
+    </div>
+    <p class="fine-print">COBBLEVERSE VGC · REGULAMENTO OFICIAL · SUJEITO A ATUALIZAÇÕES</p>
+  </footer>
+
+</body>
+</html>
